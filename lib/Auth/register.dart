@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:spvalley_frontend/services/loginController.dart';
 
 
-class Login extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   final LoginController controller = Get.put(LoginController());
 
   @override
@@ -16,10 +16,10 @@ class Login extends StatelessWidget {
                 _header(context),
                 SizedBox(height: 20,),
                 Text('Login to Your Account',
-                style: GoogleFonts.cairo(
-                  fontSize: 20,
-                  letterSpacing: 0
-                ),),
+                  style: GoogleFonts.cairo(
+                      fontSize: 20,
+                      letterSpacing: 0
+                  ),),
                 SizedBox(height: 10,),
                 _input(
                   label: 'Email',
@@ -36,12 +36,43 @@ class Login extends StatelessWidget {
                   validator: controller.passwordValidator,
                   loginController: controller,
                 ),
+                _input(
+                  label: 'Name',
+                  isPassword: false,
+                  controller: controller.namecontroller,
+                  validator: controller.nameValidator,
+                  loginController: controller,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: _input(
+                        label: 'Block',
+                        isPassword: false,
+                        controller: controller.blockcontroller,
+                        validator: controller.blockValidator,
+                        loginController: controller,
+                      ),
+                    ),
+                    Expanded(
+                      child: _input(
+                        label: 'Flat Number',
+                        isPassword: false,
+                        controller: controller.flat_numbercontroller,
+                        validator: controller.flat_numberValidator,
+                        loginController: controller,
+                      ),
+                    ),
+                  ],
+                ),
+
                 Padding(
                   padding: const EdgeInsets.only(left: 13.0,top: 10, right: 13),
                   child: Divider(),
                 ),
                 ElevatedButton(
-                  onPressed: () => Get.find<LoginController>().supabase_signin(),
+                  onPressed: () => Get.find<LoginController>().supabase_signup(),
                   child: Text("Login"),
                 ),
 
