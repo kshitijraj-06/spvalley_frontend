@@ -7,8 +7,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'Auth/login.dart';
 import 'dashboard.dart';
 
-const supabaseUrl = 'https://dhyioipwjycmmhmqeyzj.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRoeWlvaXB3anljbW1obXFleXpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkyMzQ2MzQsImV4cCI6MjA2NDgxMDYzNH0.eN3FZXEJDllkx5lz5epFsYvSu7yhFdChYGZdKj-fOZY';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
