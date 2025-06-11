@@ -80,8 +80,7 @@ class ComplaintRequestForm extends StatelessWidget{
 
             ElevatedButton(
               onPressed: () {
-                // You can call your controller method here
-                Get.snackbar('Submitted', 'Your complaint has been sent!');
+                complaintRequestController.submitComplaintRequest();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF003AF5),

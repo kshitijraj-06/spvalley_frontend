@@ -3,17 +3,32 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:spvalley_frontend/Auth/login.dart';
 import 'package:spvalley_frontend/Auth/register.dart';
+import 'package:spvalley_frontend/Screens/add_visitors.dart';
 import 'package:spvalley_frontend/Screens/complaint_request.dart';
 import 'package:spvalley_frontend/Screens/maintenance.dart';
+import 'package:spvalley_frontend/Screens/profile.dart';
+import 'package:spvalley_frontend/Screens/view_visitors.dart';
 import 'package:spvalley_frontend/services/loginController.dart';
 import 'package:spvalley_frontend/services/maintenance_controller.dart';
 import 'package:spvalley_frontend/utils/circle_widget.dart';
 
-class Dashboard extends StatelessWidget{
-  final LoginController loginController = Get.find<LoginController>();
-  final MaintenanceService maintenanceService = Get.put(MaintenanceService());
+class Dashboard extends StatefulWidget{
 
   Dashboard({super.key});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+@override
+void onInit(){
+  Get.put(MaintenanceService());
+}
+
+class _DashboardState extends State<Dashboard> {
+  final LoginController loginController = Get.find<LoginController>();
+
+  final MaintenanceService maintenanceService = Get.put(MaintenanceService());
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +45,13 @@ class Dashboard extends StatelessWidget{
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 30,
+                InkWell(
+                  onTap: (){
+                    Get.to(ProfilePage());
+                  },
+                  child: CircleAvatar(
+                    radius: 30,
+                  ),
                 ),
                 SizedBox(width: 20,),
                 Column(
@@ -113,7 +133,7 @@ class Dashboard extends StatelessWidget{
                   ),),
                   InkWell(
                     onTap: (){
-
+                      Get.to(() => AllVisitorsScreen());
                     },
                     child: Text('View All',
                       style: GoogleFonts.poppins(
@@ -125,7 +145,7 @@ class Dashboard extends StatelessWidget{
                 ],
               ), // Visitors(TEXT)
               SizedBox(height: 10,),
-              CircleWidget(title: 'Add', icon: Icons.add, add: true,),
+              InkWell(child: CircleWidget(title: 'Add', icon: Icons.add, add: true,), onTap: (){Get.to(AddVisitors());},),
               SizedBox(height: 10,),
               Text('Announcements & Events',
                 style: GoogleFonts.poppins(

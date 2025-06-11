@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import '../services/maintenance_controller.dart';
+import '../utils/pdf.dart';
 
 class MaintenanceScreen extends StatelessWidget {
   final MaintenanceService maintenanceService = Get.put(MaintenanceService());
@@ -23,6 +24,22 @@ class MaintenanceScreen extends StatelessWidget {
 
           return TabBarView(children: [_buildList(pending), _buildList(paid)]);
         }),
+        floatingActionButton: Obx(() {
+          final paid = maintenanceService.maintenanceList
+              .where((e) => e['status'] == 'paid')
+              .toList();
+
+          return paid.isNotEmpty
+              ? FloatingActionButton.extended(
+            onPressed: () {
+              Get.to(() => PaidMaintenancePDFViewer(paidList: paid));
+            },
+            icon: Icon(Icons.picture_as_pdf),
+            label: Text('View Paid PDF'),
+          )
+              : SizedBox.shrink();
+        }),
+
       ),
     );
   }
@@ -75,6 +92,7 @@ class MaintenanceScreen extends StatelessWidget {
                       'Paid',
                       style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                     ),
+
           ),
         );
       },

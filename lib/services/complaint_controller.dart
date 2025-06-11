@@ -14,17 +14,31 @@ class ComplaintRequestController extends GetxController{
   final categories = ['Select Category','Water Issues', 'Cleanliness Issue', 'Security Issue', 'Other'];
 
 
-  Future<void> submitComplaintRequest() async{
-    final user = Supabase.instance.client.auth.currentUser!;
+  Future<void> submitComplaintRequest() async {
+    final supabase = Supabase.instance.client;
+    final user = supabase.auth.currentUser;
 
-    final response = await Supabase.instance.client.from('complaints').insert({
-      'name': namecontroller.text,
-      'block': blockcontroller.text,
-      'flat_number': flatnumbercontroller.text,
-      'subject': subjectcontroller.text,
-      'description': descriptioncontroller.text,
-      'category': selectedCategory.value,
-      'user_id': user.id
-    });
+    if (user == null) {
+      Get.snackbar('Error', 'User not logged in');
+      return;
+    }
+
+    try {
+      final response = await supabase.from('complaints').insert({
+        'user_id': user.id,
+        'name': namecontroller.text,
+        'block': blockcontroller.text,
+        'flat_number': flatnumbercontroller.text,
+        'subject': subjectcontroller.text,
+        'description': descriptioncontroller.text,
+        'category': selectedCategory.value, // assuming it's an RxString
+      });
+
+      Get.snackbar('Success', 'Your complaint has been submitted!');
+      // You can also clear the controllers here if needed
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
   }
+
 }
